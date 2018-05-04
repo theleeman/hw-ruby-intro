@@ -40,29 +40,78 @@ def sum_to_n?(arr, n)
     false
   else
     arr.permutation(2).any? {|x, y| x + y == n}
-    
   end
 end
 
 
 
 # Part 2
-=begin
+#Define a method hello(name) that takes a string representing a name 
+#and returns the string "Hello, " concatenated with the name.  
 def hello(name)
-  # YOUR CODE HERE
+  "Hello, " + name
 end
 
-def starts_with_consonant? s
-  # YOUR CODE HERE
+#Define a method starts_with_consonant?(s) that takes a string and returns
+#true if it starts with a consonant and false otherwise. (For our purpose,
+#a consonant is any letter other than A, E, I, O, U.) Note: be sure it works
+#for both upper and lower case and for nonletters.
+def starts_with_consonant?(s)
+ !!(s[0] =~ /[bcdfghjklmnprstvwxyz]+/i)
 end
 
-def binary_multiple_of_4? s
-  # YOUR CODE HERE
+#Define a method binary_multiple_of_4?(s) that takes a string and returns
+#true if the string represents a binary number that is nultiple of 4. 
+#NOTE: be sure it returns false if the string is not a valid binary number!
+def binary_multiple_of_4?(s)
+   is = s.to_i
+    if s == "0"
+       true
+    elsif /[a-zA-Z^$3-9*]/.match(s)
+       false
+    else
+      if /^[10]*00$/.match(s) && is % 2 == 0
+         true
+      else
+         false
+      end
+    end
+    
+    #return true if s == "0"
+  	#/^[10]*00$/.match(s) != nil
 end
 
-# Part 3
+=begin
+Part 3
+Define a class "BookInStore" which represents a book with an ISBN
+number, "isbn", and price of the book as a floating-point number, 
+"price", as attributes.
 
-class BookInStock
-# YOUR CODE HERE
-end
+The constructor should accept the ISBN number
+(a string, since in real life ISBN numbers can begin with zero and can
+include hyphens) as the first argument and price as second argument, and
+should raise `ArgumentError` (one of Ruby's built-in exception types) if
+the ISBN number is the empty string or if the price is less than or
+equal to zero.  Include the proper getters and setters for these
+attributes. Run associated tests via:  `$ rspec -e 'constructor' spec/part3_spec.rb`
+
+Include a method `price_as_string` that returns the price of
+the book formatted with a leading dollar sign and two decimal places, that is, a price
+of 20 should format as "$20.00" and a price of 33.8 should format as
+"$33.80". Run associated tests via:  `$ rspec -e '#price_as_string' spec/part3_spec.rb`
+
+You can check your progress on the all the above by running `rspec spec/part3_spec.rb`.
 =end
+class BookInStock
+  attr_accessor :isbn, :price
+  
+  def initialize(isbn, price)
+    @isbn = isbn
+    @price = price
+    raise ArgumentError if ( isbn.empty? || price <= 0)
+  end
+
+  def price_as_string
+    "$%.2f" % price
+  end
+end
